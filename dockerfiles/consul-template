@@ -1,0 +1,18 @@
+##
+## From: https://github.com/avthart/docker-consul-template/blob/master/Dockerfile
+##
+FROM gliderlabs/alpine:3.1
+
+ENV CONSUL_TEMPLATE_VERSION 0.10.0
+
+## Get and Install Consum-template
+## --
+ADD https://github.com/hashicorp/consul-template/releases/download/v${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.tar.gz \
+ /tmp/consul-template.tar.gz
+
+RUN tar zxvf /tmp/consul-template.tar.gz -C /tmp \
+ && rm /tmp/consul-template.tar.gz \
+ && mv -v /tmp/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64/consul-template /bin/consul-template \
+ && rm -rf /tmp/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64
+
+CMD ["/bin/consul-template"]
